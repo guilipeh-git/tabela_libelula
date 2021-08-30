@@ -228,6 +228,7 @@
         if(this.validarCampo(produto)){
           if(this.editId == null){
             this.adicionar(produto);
+            this.cancelar();
           }
           else{
             this.atualizar(this.editId, produto);
