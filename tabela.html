@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tabela</title>
+  <link rel="stylesheet" href="../static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap" rel="stylesheet">
+</head>
+<style>
+  *{
+    margin: 0;
+  }
+  body{
+    
+    font-family: "Hina Mincho",sefif;
+    background: #fafbfa;
+  }
+  .titulo{
+    float: inline-end;
+    background:#821fa2;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    
+  }
+  main{
+    
+    
+    padding: 30px 30px;
+    
+  }
+  
+  .card{
+    display: flex;
+    flex-wrap: wrap;
+    border: solid 1px #ccc;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+    background-color: #cdd1d6;
+     
+  
+  }
+  .line-input{
+    display:grid;
+    margin-left: 10px;
+    margin-bottom:10px;
+    
+    
+  }
+  input{
+    width: 130px;
+    padding: 10px;
+    border: solid 1px #ccc;
+    border-radius:4px;
+    outline: 0;
+    
+  }
+  
+  button{
+    border: solid 1px #ccc;
+    padding: 10px;
+    background-color: #821fa2;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+  }
+  button:hover{
+    background-color: rgb(66, 13, 116);
+    transition: all ease 0.3s;
+  }
+  .content{
+    margin: 15px 0 0 0;
+    
+  }
+  table{
+    border-collapse: collapse;
+    border: solid 1px #ccc;
+    width: 100%;
+  }
+  table{
+    background-color: rgb(222, 222, 222);
+    
+  }
+  table th,  td{
+    padding: 5px 10px;
+    text-align: left;
+    
+  }
+  table th{
+    background-color: rgb(173, 167, 167);
+  }
+  .center{
+    text-align: center;
+  }
+  table td img{
+    width: 20px;
+    margin:0 5px;
+  }
+  .teste{
+    margin-top:20px ;
+  }
+
+</style>
+
+<body>
+  <header class="titulo">
+    <h1>Tabela</h1>
+  </header>
+
+  <main class="produtos">
+    <div class="sub-titulo">
+      <h2>Tabela 1.0</h2>
+      <span>Tabela do Libelula.</span>
+    
+        <div class="card">
+        
+            <div class="line-input">
+              <label>Data</label>
+              <input type="date" id="id">
+            </div>
+              <div class="line-input">
+              <label>Brassagem</label>
+              <input value="0" type="number" id="Brassagem">
+            </div>
+              <div class="line-input">
+              <label>Centrifuga</label>
+              <input value="0" type="number" id="Centrifuga">
+            </div>
+            <div class="line-input">
+              <label>Filtração</label>
+              <input value="0" type="number" id="Filtração">
+            </div>
+            <div class="line-input">
+              <label>501</label>
+              <input value="0" type="number" id="_501">
+            </div>
+            <div class="line-input">
+              <label>503</label>
+              <input value="0" type="number" id="_503">
+            </div>
+            <div class="line-input">
+              <label>511_Cerveja</label>
+              <input value="0" type="number" id="_511_Cerveja">
+            </div>
+              <div class="line-input">
+                <label>512</label>
+                <input value="0" type="number" id="_512">
+              </div>
+              <div class="line-input">
+                <label>511_Refri</label>
+                <input value="0" type="number" id="_511_Refri">
+              </div>
+              <div class="line-input">
+                <label>521</label>
+                <input value="0" type="number" id="_521">
+              </div>
+              <div class="line-input">
+                <label>551</label>
+                <input value="0" type="number" id="_551">
+              </div>
+              <div class="line-input">
+                <label>561</label>
+                <input value="0" type="number" id="_561">
+              </div>
+              <div class="line-input">
+                <label>562</label>
+                <input value="0" type="number" id="_562">
+              </div>
+        </div>
+
+    
+    <div class="teste">
+      <button onclick="tabela.salvar()" id="btn1">Salvar</button>
+      <button onclick="tabela.cancelar()">Cancelar</button>
+    </div>
+  
+  
+    <div class="content">
+      <table border=1;>
+        <thead>
+          <th class="center">Data</th>
+          <th>Brassagem</th>
+          <th>Centrifuga</th>
+          <th>Filtração</th>
+          <th>501</th>
+          <th>503</th>
+          <th>511_Cerveja</th>
+          <th>512</th>
+          <th>511_Refri</th>
+          <th>521</th>
+          <th>551</th>
+          <th>561</th>
+          <th>562</th>
+          <th class="center">Ações</th>
+        </thead>
+        <tbody id="minhaTabela">
+          
+
+        </tbody>
+      </table>
+    </div>
+  </main>
+      
+
+  
+  <script>
+    class Tabela{
+
+      constructor(){
+        
+        this.editId = null;
+        this.arrayProdutos = [{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},];
+        
+        this.listaTabela();
+        
+      }
+      salvar(){
+        
+        
+        let produto = this.lerDados();
+        
+        if(this.validarCampo(produto)){
+          if(this.editId == null){
+            this.adicionar(produto);
+          }
+          else{
+            this.atualizar(this.editId, produto);
+            ///////////////
+          }
+        }
+        console.log(this.arrayProdutos)
+        this.listaTabela();
+      }
+
+      fdate(i){
+        let p = this.arrayProdutos[i].id;
+        var date = [p[8]+p[9] + "-" + p[5]+p[6]+"-"+p[0]+p[1]+p[2]+p[3]];
+        return date[0];
+
+      }
+      listaTabela(){
+        //lista dinamica da tela.
+        let tbody = document.getElementById('minhaTabela');
+        tbody.innerText = "";
+
+        for( let i=0; i < this.arrayProdutos.length; i++) {
+         let tr = tbody.insertRow();
+
+         let td_id = tr.insertCell();
+         let td_Brassagem = tr.insertCell();
+         let td_Centrifuga = tr.insertCell();
+         let td_Filtração = tr.insertCell();
+         let td_501 = tr.insertCell();
+         let td_503 = tr.insertCell();
+         let td_511_Cerveja = tr.insertCell();
+         let td_512 = tr.insertCell();
+         let td_511_Refri= tr.insertCell();
+         let td_521 = tr.insertCell();
+         let td_551 = tr.insertCell();
+         let td_561 = tr.insertCell();
+         let td_562 = tr.insertCell();
+         let td_acao = tr.insertCell();
+
+         
+         td_id.innerText = this.fdate(i);
+         td_Brassagem.innerText = this.arrayProdutos[i].Brassagem;
+         td_Centrifuga.innerText = this.arrayProdutos[i].Centrifuga;
+         td_Filtração.innerText = this.arrayProdutos[i].Filtração;
+         td_501.innerText = this.arrayProdutos[i]._501;
+         td_503.innerText = this.arrayProdutos[i]._503;
+         td_511_Cerveja.innerText = this.arrayProdutos[i]._511_Cerveja;
+         td_512.innerText = this.arrayProdutos[i]._512;
+         td_511_Refri.innerText = this.arrayProdutos[i]._511_Refri;
+         td_521.innerText = this.arrayProdutos[i]._521;
+         td_551.innerText = this.arrayProdutos[i]._551;
+         td_561.innerText = this.arrayProdutos[i]._561;
+         td_562.innerText = this.arrayProdutos[i]._562;
+         
+
+         td_id.classList.add('center');
+        
+
+         let imgEdit = document.createElement('img');
+         imgEdit.src = "../img/edita_1.svg";
+         imgEdit.alt = "Editar";
+         td_acao.appendChild(imgEdit);
+
+         imgEdit.setAttribute("onclick","tabela.editar("+ JSON.stringify(this.arrayProdutos[i]) +")");
+
+         var delet = document.createElement("img");
+         delet.src = "../img/delet_1.svg";
+         delet.alt = "Deletar";
+         td_acao.appendChild(delet);
+         delet.setAttribute("onclick","tabela.deletar("+ JSON.stringify(this.arrayProdutos[i].id) +")");
+
+
+         td_acao.classList.add('center');
+
+        }
+
+      
+        
+      }
+      adicionar(produto){
+        //adiciona produtos no array
+        
+        this.arrayProdutos.push(produto)
+        
+      }
+    
+      lerDados(){
+        let produto = {};
+        produto.id = document.getElementById('id').value;
+        produto.Brassagem = document.getElementById('Brassagem').value;
+        produto.Centrifuga = document.getElementById('Centrifuga').value;
+        produto.Filtração = document.getElementById('Filtração').value;
+        produto._501 = document.getElementById('_501').value;
+        produto._503 = document.getElementById('_503').value;
+        produto._511_Cerveja = document.getElementById('_511_Cerveja').value;
+        produto._512 = document.getElementById('_512').value;
+        produto._511_Refri = document.getElementById('_511_Refri').value;
+        produto._521 = document.getElementById('_521').value;
+        produto._551 = document.getElementById('_551').value;
+        produto._561 = document.getElementById('_561').value;
+        produto._562 = document.getElementById('_562').value;
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        console.log(produto);
+        return produto;
+      }
+
+      validarCampo(produto){
+        let msg = "";
+        if(this.lerDados().id == ""){
+          msg += "Insira uma data.\n"
+        }
+        if(this.lerDados().Brassagem == ""){
+          msg += "Insira o valor  da Brassagem. \n"
+        }
+        if(this.lerDados().Centrifuga == ""){
+          msg += "Insira o valor da Centrifuga.\n"
+        }
+        if(this.lerDados().Filtração == ""){
+          msg += "Insira o valor da Filtração.\n"
+        }
+        if(this.lerDados()._501 == ""){
+          msg += "Insira o valor da 501.\n"
+        }
+        if(this.lerDados()._503 == ""){
+          msg += "Insira o valor da 503.\n"
+        }
+        if(this.lerDados()._511_Cerveja == ""){
+          msg += "Insira o valor da 511_Cerveja.\n"
+        }
+        if(this.lerDados()._512 == ""){
+          msg += "Insira o valor da 512.\n"
+        }
+        if(this.lerDados()._511_Refri == ""){
+          msg += "Insira o valor da 511_Refri.\n"
+        }
+        if(this.lerDados()._521 == ""){
+          msg += "Insira o valor da 521.\n"
+        }
+        if(this.lerDados()._551 == ""){
+          msg += "Insira o valor da 551.\n"
+        }
+        if(this.lerDados()._561 == ""){
+          msg += "Insira o valor da 561.\n"
+        }
+        if(this.lerDados()._562 == ""){
+          msg += "Insira o valor da 562.\n"
+        }
+        if(msg != ""){
+          alert(msg);
+          return false;
+        } 
+        return true;
+      }
+      cancelar(){
+        document.getElementById('id').value = "";
+        document.getElementById('Brassagem').value ="";
+        document.getElementById('Centrifuga').value = "";
+        document.getElementById('Filtração').value = "";
+        document.getElementById('_501').value = "";
+        document.getElementById('_503').value = "";
+        document.getElementById('_511_Cerveja').value = "";
+        document.getElementById('_512').value = "";
+        document.getElementById('_511_Refri').value = "";
+        document.getElementById('_521').value = "";
+        document.getElementById('_551').value = "";
+        document.getElementById('_561').value = "";
+        document.getElementById('_562').value = "";
+
+
+        this.editId = null;
+        document.getElementById("btn1").innerText = "Salvar";
+        }
+      deletar(id){
+
+        let p = id;
+        var date = [p[8]+p[9] + "-" + p[5]+p[6]+"-"+p[0]+p[1]+p[2]+p[3]];
+
+        let confimar = confirm('Deletar linha toda a linha : ' + date);
+
+        if(confimar){
+
+          let tbody = document.getElementById('minhaTabela');
+          
+          for(let i = 0; i < this.arrayProdutos.length; i++){
+            if(this.arrayProdutos[i].id == id){
+              this.arrayProdutos.splice(i,1);
+              tbody.deleteRow(i);
+              this.id = this.arrayProdutos.length + 1;
+            }
+          }
+          console.log(this.arrayProdutos)
+          this.cancelar();
+        }
+      }
+
+      editar(dados){
+       ///////role de formata data/////////////// 
+        let p = dados.id;
+        var date = [p[8]+p[9] + "-" + p[5]+p[6]+"-"+p[0]+p[1]+p[2]+p[3]];
+//////////////////////////////////////////////////////////////////
+        if(confirm("Editar item !!! " + date)){
+          
+          
+          this.editId = dados.id;
+          document.getElementById('id').value = dados.id;
+          document.getElementById('Brassagem').value = dados.Brassagem;
+          document.getElementById('Centrifuga').value = dados.Centrifuga;
+          document.getElementById('Filtração').value = dados.Filtração;
+          document.getElementById('_501').value = dados._501;
+          document.getElementById('_503').value = dados._503;
+          document.getElementById('_511_Cerveja').value = dados._511_Cerveja;
+          document.getElementById('_512').value = dados._512;
+          document.getElementById('_511_Refri').value = dados._511_Refri;
+          document.getElementById('_521').value = dados._521;
+          document.getElementById('_551').value = dados._551;
+          document.getElementById('_561').value = dados._561;
+          document.getElementById('_562').value = dados._562;
+
+          document.getElementById('btn1').innerText = "Atualizar";
+        
+        }
+        
+      }
+
+
+      atualizar(id, produto){
+        
+        for(let i = 0; i < this.arrayProdutos.length;i++){
+          if(this.arrayProdutos[i].id == id){
+            this.arrayProdutos[i].id = produto.id;
+            this.arrayProdutos[i].Brassagem = produto.Brassagem;
+            this.arrayProdutos[i].Centrifuga = produto.Centrifuga;
+            this.arrayProdutos[i].Filtração = produto.Filtração;
+            this.arrayProdutos[i]._501 = produto._501;
+            this.arrayProdutos[i]._503 = produto._503;
+            this.arrayProdutos[i]._511_Cerveja = produto._511_Cerveja;
+            this.arrayProdutos[i]._512 = produto._512;
+            this.arrayProdutos[i]._511_Refri = produto._511_Refri;
+            this.arrayProdutos[i]._521 = produto._521;
+            this.arrayProdutos[i]._551 = produto._551;
+            this.arrayProdutos[i]._561 = produto._561;
+            this.arrayProdutos[i]._562 = produto._562;
+            this.cancelar();
+          }
+        }
+        /*document.getElementById('btn1').innerText = "Salvar";
+        this.editId = null;*/
+      }
+        
+      }
+      
+
+    var tabela = new Tabela();
+  </script>
+
+</body>
+</html>
