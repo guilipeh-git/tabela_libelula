@@ -228,6 +228,7 @@
         if(this.validarCampo(produto)){
           if(this.editId == null){
             this.adicionar(produto);
+            this.cancelar();
           }
           else{
             this.atualizar(this.editId, produto);
@@ -236,8 +237,6 @@
         }
         console.log(this.arrayProdutos)
         this.listaTabela();
-        this.cancelar();
-        
       }
 
       fdate(i){
@@ -339,11 +338,44 @@
 
       validarCampo(produto){
         let msg = "";
-        if(this.lerDados().NomeProduto == ""){
-          msg += "Insira o nome do produto\n"
+        if(this.lerDados().id == ""){
+          msg += "Insira uma data.\n"
         }
-        if(this.lerDados().preco == ""){
-          msg += "Insira o preço do produto\n"
+        if(this.lerDados().Brassagem == ""){
+          msg += "Insira o valor  da Brassagem. \n"
+        }
+        if(this.lerDados().Centrifuga == ""){
+          msg += "Insira o valor da Centrifuga.\n"
+        }
+        if(this.lerDados().Filtração == ""){
+          msg += "Insira o valor da Filtração.\n"
+        }
+        if(this.lerDados()._501 == ""){
+          msg += "Insira o valor da 501.\n"
+        }
+        if(this.lerDados()._503 == ""){
+          msg += "Insira o valor da 503.\n"
+        }
+        if(this.lerDados()._511_Cerveja == ""){
+          msg += "Insira o valor da 511_Cerveja.\n"
+        }
+        if(this.lerDados()._512 == ""){
+          msg += "Insira o valor da 512.\n"
+        }
+        if(this.lerDados()._511_Refri == ""){
+          msg += "Insira o valor da 511_Refri.\n"
+        }
+        if(this.lerDados()._521 == ""){
+          msg += "Insira o valor da 521.\n"
+        }
+        if(this.lerDados()._551 == ""){
+          msg += "Insira o valor da 551.\n"
+        }
+        if(this.lerDados()._561 == ""){
+          msg += "Insira o valor da 561.\n"
+        }
+        if(this.lerDados()._562 == ""){
+          msg += "Insira o valor da 562.\n"
         }
         if(msg != ""){
           alert(msg);
@@ -440,6 +472,7 @@
             this.arrayProdutos[i]._551 = produto._551;
             this.arrayProdutos[i]._561 = produto._561;
             this.arrayProdutos[i]._562 = produto._562;
+            this.cancelar();
           }
         }
         /*document.getElementById('btn1').innerText = "Salvar";
