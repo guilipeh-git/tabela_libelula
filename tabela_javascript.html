@@ -267,12 +267,22 @@
         lista.shift(); // apaga o primeiro item da lista
       }
       
-      console.log(this.arrayProdutos);
+      //console.log(this.arrayProdutos);
       this.listaTabela()
       return this.arrayProdutos;
       
 
     }
+    // verifica se a data ja existe
+    dataExiste(id){
+          for(let i=0; i< this.arrayProdutos.length; i++){
+            if(this.arrayProdutos[i].id == id){
+              alert('data ja existe.');
+              return false;
+            }
+          }
+          return true;
+        }
 
      salvar(){
         
@@ -281,9 +291,12 @@
         
         if(this.validarCampo(produto)){
           if(this.editId == null){
+            let salva = this.arrayProdutos[3].id;
+            if(this.dataExiste(document.getElementById('id').value)){
             this.adicionar(produto);
             this.cancelar();
-           console.log(this.arrayProdutos)
+            }
+           
           }
           else{
             this.atualizar(this.editId, produto);
@@ -474,7 +487,7 @@
               this.id = this.arrayProdutos.length + 1;
             }
           }
-          console.log(this.arrayProdutos)
+          //console.log(this.arrayProdutos)
           this.cancelar();
         }
       }
