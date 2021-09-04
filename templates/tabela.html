@@ -116,6 +116,23 @@
     <div class="sub-titulo">
       <h2>Tabela 1.0</h2>
       <span>Tabela do Libelula.</span>
+      <select name="mes" id="mes" onclick="tabela.bntFiltro()">
+        <option value="true">Filtro Mês</option>
+        <option value="true">Todos</option>
+        <option value="01">Janeiro</option>
+        <option value="02">Fevereiro</option>
+        <option value="03">Março</option>
+        <option value="04">Abril</option>
+        <option value="05">Maio</option>
+        <option value="06">Junho</option>
+        <option value="07">Julho</option>
+        <option value="08">Agosto</option>
+        <option value="09">Setembro</option>
+        <option value="10">Outubro</option>
+        <option value="11">Novembro</option>
+        <option value="12">Dezembro</option>
+      </select>
+      
     
         <div class="card">
         
@@ -214,28 +231,79 @@
       constructor(){
         
         this.editId = null;
-        this.arrayProdutos = [{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},];
+        this.arrayLista = [{id:"1990-01-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70081,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70081,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-11-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-11-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-11-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
+      _511_Refri:34,_521:78,_551:708,_561:78,_562:70089,},]
+        this.arrayProdutos = this.filtro();
         
         this.listaTabela();
         
       }
-      salvar(){
+
+      bntFiltro(){
+        this.filtro();
+      }
+      filtro(){
+        let lista = []
+        
+        for(let i = 0; i < this.arrayLista.length; i++){
+          if(this.arrayLista[i].id[5]+this.arrayLista[i].id[6] == document.getElementById('mes').value)
+            lista.push(this.arrayLista[i]);
+            
+          if(document.getElementById('mes').value == "true"){
+            lista.push(this.arrayLista[i]);
+            
+          }     
+      }
+      
+      this.arrayProdutos = lista.slice(); // slice serve para copiar
+      for(let i = 0; i < lista.length*1000; i++){
+        lista.shift(); // apaga o primeiro item da lista
+      }
+      
+      //console.log(this.arrayProdutos);
+      this.listaTabela()
+      return this.arrayProdutos;
+      
+
+    }
+    // verifica se a data ja existe
+    dataExiste(id){
+          for(let i=0; i< this.arrayProdutos.length; i++){
+            if(this.arrayProdutos[i].id == id){
+              alert('data ja existe.');
+              return false;
+            }
+          }
+          return true;
+        }
+
+     salvar(){
         
         
         let produto = this.lerDados();
         
         if(this.validarCampo(produto)){
           if(this.editId == null){
+            let salva = this.arrayProdutos[3].id;
+            if(this.dataExiste(document.getElementById('id').value)){
             this.adicionar(produto);
             this.cancelar();
+            }
+           
           }
           else{
             this.atualizar(this.editId, produto);
-            ///////////////
           }
         }
-        console.log(this.arrayProdutos)
+        
         this.listaTabela();
       }
 
@@ -332,7 +400,7 @@
         produto._562 = document.getElementById('_562').value;
         
         /////////////////////////////////////////////////////////////////////////////////////////////////
-        console.log(produto);
+        //console.log(produto);
         return produto;
       }
 
@@ -420,7 +488,7 @@
               this.id = this.arrayProdutos.length + 1;
             }
           }
-          console.log(this.arrayProdutos)
+          //console.log(this.arrayProdutos)
           this.cancelar();
         }
       }
