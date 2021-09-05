@@ -116,7 +116,7 @@
     <div class="sub-titulo">
       <h2>Tabela 1.0</h2>
       <span>Tabela do Libelula.</span>
-      <select name="mes" id="mes">
+      <select name="mes" id="mes" onclick="tabela.bntFiltro()">
         <option value="true">Filtro Mês</option>
         <option value="true">Todos</option>
         <option value="01">Janeiro</option>
@@ -132,7 +132,8 @@
         <option value="11">Novembro</option>
         <option value="12">Dezembro</option>
       </select>
-      <button onclick="tabela.bntFiltro()">Filtrar</button>
+      
+      <input type="hidden" id="lista_array" value="{{lista_array}}">
     
         <div class="card">
         
@@ -229,18 +230,11 @@
     class Tabela{
 
       constructor(){
+        var lista = document.getElementById('lista_array').value
+
         
-        this.editId = null;
-        this.arrayLista = [{id:"1990-01-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70081,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70081,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-11-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-11-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-12-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70088,},{id:"1990-11-18",Brassagem:"3",Centrifuga:"10",Filtração:9,_501:5,_503:8,_511_Cerveja:56,_512:878,
-      _511_Refri:34,_521:78,_551:708,_561:78,_562:70089,},]
+        
+        this.arrayLista = JSON.parse(lista);// trasforma lista na forma de array que o javascript consegue interpretar
         this.arrayProdutos = this.filtro();
         
         this.listaTabela();
@@ -278,7 +272,7 @@
     dataExiste(id){
           for(let i=0; i< this.arrayProdutos.length; i++){
             if(this.arrayProdutos[i].id == id){
-              alert('data ja existe.');
+              alert('data ja existente!');
               return false;
             }
           }
@@ -287,11 +281,12 @@
 
      salvar(){
         
-        
+        console.log(document.getElementById('mes').value = true)//////////////////////////////////////////////////////////////////
         let produto = this.lerDados();
         
         if(this.validarCampo(produto)){
           if(this.editId == null){
+            this.bntFiltro();
             let salva = this.arrayProdutos[3].id;
             if(this.dataExiste(document.getElementById('id').value)){
             this.adicionar(produto);
@@ -303,7 +298,9 @@
             this.atualizar(this.editId, produto);
           }
         }
-        
+        this.arrayLista = []
+        this.arrayLista = this.arrayProdutos
+        console.log(this.arrayLista)
         this.listaTabela();
       }
 
