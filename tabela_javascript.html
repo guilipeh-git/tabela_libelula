@@ -108,6 +108,7 @@
 </style>
 
 <body>
+  
   <header class="titulo">
     <h1>Tabela</h1>
   </header>
@@ -133,7 +134,7 @@
         <option value="12">Dezembro</option>
       </select>
       
-      <input type="hidden" id="lista_array" value="{{lista_array}}">
+      <input type="hidden" id="lista_array" value="{{lista_array}}" name="data">
     
         <div class="card">
         
@@ -193,7 +194,7 @@
 
     
     <div class="teste">
-      <button onclick="tabela.salvar()" id="btn1">Salvar</button>
+      <button type="submit" onclick="tabela.salvar()" id="btn1">Salvar</button>
       <button onclick="tabela.cancelar()">Cancelar</button>
     </div>
   
@@ -225,11 +226,11 @@
   </main>
       
 
-  
   <script>
     class Tabela{
 
       constructor(){
+        
         var lista = document.getElementById('lista_array').value
 
         
@@ -245,7 +246,7 @@
         this.filtro();
       }
       filtro(){
-        let lista = []
+        var lista = [];
         
         for(let i = 0; i < this.arrayLista.length; i++){
           if(this.arrayLista[i].id[5]+this.arrayLista[i].id[6] == document.getElementById('mes').value)
@@ -268,6 +269,7 @@
       
 
     }
+
     // verifica se a data ja existe
     dataExiste(id){
           for(let i=0; i< this.arrayProdutos.length; i++){
@@ -280,13 +282,15 @@
         }
 
      salvar(){
-        
-        console.log(document.getElementById('mes').value = true)//////////////////////////////////////////////////////////////////
+      document.getElementById('mes').value = true;
+      this.bntFiltro();
+
+        //////////////////////////////////////////////////////////////////
         let produto = this.lerDados();
         
         if(this.validarCampo(produto)){
           if(this.editId == null){
-            this.bntFiltro();
+            
             let salva = this.arrayProdutos[3].id;
             if(this.dataExiste(document.getElementById('id').value)){
             this.adicionar(produto);
@@ -295,15 +299,25 @@
            
           }
           else{
-            this.atualizar(this.editId, produto);
+            
+              console.log(this.arrayProdutos)
+              this.atualizar(this.editId, produto);
+              this.arrayProdutos = this.arrayLista;
+            }
+            
           }
-        }
-        this.arrayLista = []
-        this.arrayLista = this.arrayProdutos
-        console.log(this.arrayLista)
+        
+        
+        this.arrayLista = this.arrayProdutos;
+        console.log(this.arrayProdutos)
         this.listaTabela();
-      }
 
+        }
+
+      
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       fdate(i){
         let p = this.arrayProdutos[i].id;
         var date = [p[8]+p[9] + "-" + p[5]+p[6]+"-"+p[0]+p[1]+p[2]+p[3]];
@@ -495,7 +509,7 @@
         let p = dados.id;
         var date = [p[8]+p[9] + "-" + p[5]+p[6]+"-"+p[0]+p[1]+p[2]+p[3]];
 //////////////////////////////////////////////////////////////////
-        if(confirm("Editar item !!! " + date)){
+        if(confirm("Editar data!!! " + date)){
           
           
           this.editId = dados.id;
@@ -521,7 +535,7 @@
 
 
       atualizar(id, produto){
-        
+        //document.getElementById('mes').value = true;
         for(let i = 0; i < this.arrayProdutos.length;i++){
           if(this.arrayProdutos[i].id == id){
             this.arrayProdutos[i].id = produto.id;
