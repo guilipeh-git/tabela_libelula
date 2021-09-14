@@ -108,7 +108,7 @@
 </style>
 
 <body>
-  
+  <form action="{{url_for('tabelaLibelula')}}" method="post">
   <header class="titulo">
     <h1>Tabela</h1>
   </header>
@@ -134,8 +134,8 @@
         <option value="12">Dezembro</option>
       </select>
       
-      <input type="hidden" id="lista_array" value="{{lista_array}}" name="data">
-    
+      <input type="hidde" id="lista_array" name="lista_array" value="{{lista_array}}">
+
         <div class="card">
         
             <div class="line-input">
@@ -194,7 +194,7 @@
 
     
     <div class="teste">
-      <button type="submit" onclick="tabela.salvar()" id="btn1">Salvar</button>
+      <button onclick="tabela.salvar()" id="btn1">Salvar</button>
       <button onclick="tabela.cancelar()">Cancelar</button>
     </div>
   
@@ -217,25 +217,26 @@
           <th>562</th>
           <th class="center">Ações</th>
         </thead>
+        
         <tbody id="minhaTabela">
           
 
         </tbody>
+      </div>
       </table>
     </div>
   </main>
-      
+</form>  
 
+  
   <script>
     class Tabela{
 
       constructor(){
         
-        var lista = document.getElementById('lista_array').value
-
-        
-        
-        this.arrayLista = JSON.parse(lista);// trasforma lista na forma de array que o javascript consegue interpretar
+        this.editId = null;
+        this.arrayLista = JSON.parse(document.getElementById('lista_array').value)
+        this.arrayProdutos = this.arrayLista;
         this.arrayProdutos = this.filtro();
         
         this.listaTabela();
@@ -246,7 +247,7 @@
         this.filtro();
       }
       filtro(){
-        var lista = [];
+        let lista = []
         
         for(let i = 0; i < this.arrayLista.length; i++){
           if(this.arrayLista[i].id[5]+this.arrayLista[i].id[6] == document.getElementById('mes').value)
@@ -269,12 +270,11 @@
       
 
     }
-
     // verifica se a data ja existe
     dataExiste(id){
           for(let i=0; i< this.arrayProdutos.length; i++){
             if(this.arrayProdutos[i].id == id){
-              alert('data ja existente!');
+              alert('data ja existe.');
               return false;
             }
           }
@@ -282,42 +282,30 @@
         }
 
      salvar(){
-      document.getElementById('mes').value = true;
-      this.bntFiltro();
-
-        //////////////////////////////////////////////////////////////////
+      
+        
         let produto = this.lerDados();
         
         if(this.validarCampo(produto)){
           if(this.editId == null){
-            
-            let salva = this.arrayProdutos[3].id;
+            //let salva = this.arrayProdutos[3].id;
             if(this.dataExiste(document.getElementById('id').value)){
             this.adicionar(produto);
+            document.getElementById('lista_array').value = JSON.stringify(this.arrayProdutos);
+            console.log(THIS.arrayProdutos)
             this.cancelar();
             }
            
           }
           else{
-            
-              console.log(this.arrayProdutos)
-              this.atualizar(this.editId, produto);
-              this.arrayProdutos = this.arrayLista;
-            }
-            
+            this.atualizar(this.editId, produto);
+            document.getElementById('lista_array').value = JSON.stringify(this.arrayProdutos);
           }
-        
-        
-        this.arrayLista = this.arrayProdutos;
-        console.log(this.arrayProdutos)
-        this.listaTabela();
-
         }
+        
+        this.listaTabela();
+      }
 
-      
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       fdate(i){
         let p = this.arrayProdutos[i].id;
         var date = [p[8]+p[9] + "-" + p[5]+p[6]+"-"+p[0]+p[1]+p[2]+p[3]];
@@ -500,6 +488,7 @@
             }
           }
           //console.log(this.arrayProdutos)
+          document.getElementById('lista_array').value = JSON.stringify(this.arrayProdutos);
           this.cancelar();
         }
       }
@@ -509,7 +498,7 @@
         let p = dados.id;
         var date = [p[8]+p[9] + "-" + p[5]+p[6]+"-"+p[0]+p[1]+p[2]+p[3]];
 //////////////////////////////////////////////////////////////////
-        if(confirm("Editar data!!! " + date)){
+        if(confirm("Editar item !!! " + date)){
           
           
           this.editId = dados.id;
@@ -535,7 +524,7 @@
 
 
       atualizar(id, produto){
-        //document.getElementById('mes').value = true;
+        
         for(let i = 0; i < this.arrayProdutos.length;i++){
           if(this.arrayProdutos[i].id == id){
             this.arrayProdutos[i].id = produto.id;
