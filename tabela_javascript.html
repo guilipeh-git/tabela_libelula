@@ -134,7 +134,7 @@
         <option value="12">Dezembro</option>
       </select>
       
-      <input type="hidde" id="lista_array" name="lista_array" value="{{lista_array}}">
+      <input type="hidden" id="lista_array" name="lista_array" value="{{lista_array}}">
 
         <div class="card">
         
@@ -152,7 +152,7 @@
             </div>
             <div class="line-input">
               <label>Filtração</label>
-              <input value="0" type="number" id="Filtração">
+              <input value="0" type="number" id="Filtracao">
             </div>
             <div class="line-input">
               <label>501</label>
@@ -196,6 +196,7 @@
     <div class="teste">
       <button onclick="tabela.salvar()" id="btn1">Salvar</button>
       <button onclick="tabela.cancelar()">Cancelar</button>
+      <input  type="submit"   id="botaoDelete">
     </div>
   
   
@@ -323,7 +324,7 @@
          let td_id = tr.insertCell();
          let td_Brassagem = tr.insertCell();
          let td_Centrifuga = tr.insertCell();
-         let td_Filtração = tr.insertCell();
+         let td_Filtracao = tr.insertCell();
          let td_501 = tr.insertCell();
          let td_503 = tr.insertCell();
          let td_511_Cerveja = tr.insertCell();
@@ -339,7 +340,7 @@
          td_id.innerText = this.fdate(i);
          td_Brassagem.innerText = this.arrayProdutos[i].Brassagem;
          td_Centrifuga.innerText = this.arrayProdutos[i].Centrifuga;
-         td_Filtração.innerText = this.arrayProdutos[i].Filtração;
+         td_Filtracao.innerText = this.arrayProdutos[i].Filtracao;
          td_501.innerText = this.arrayProdutos[i]._501;
          td_503.innerText = this.arrayProdutos[i]._503;
          td_511_Cerveja.innerText = this.arrayProdutos[i]._511_Cerveja;
@@ -387,7 +388,7 @@
         produto.id = document.getElementById('id').value;
         produto.Brassagem = document.getElementById('Brassagem').value;
         produto.Centrifuga = document.getElementById('Centrifuga').value;
-        produto.Filtração = document.getElementById('Filtração').value;
+        produto.Filtracao = document.getElementById('Filtracao').value;
         produto._501 = document.getElementById('_501').value;
         produto._503 = document.getElementById('_503').value;
         produto._511_Cerveja = document.getElementById('_511_Cerveja').value;
@@ -414,8 +415,8 @@
         if(this.lerDados().Centrifuga == ""){
           msg += "Insira o valor da Centrifuga.\n"
         }
-        if(this.lerDados().Filtração == ""){
-          msg += "Insira o valor da Filtração.\n"
+        if(this.lerDados().Filtracao == ""){
+          msg += "Insira o valor da Filtracao.\n"
         }
         if(this.lerDados()._501 == ""){
           msg += "Insira o valor da 501.\n"
@@ -454,7 +455,7 @@
         document.getElementById('id').value = "";
         document.getElementById('Brassagem').value ="";
         document.getElementById('Centrifuga').value = "";
-        document.getElementById('Filtração').value = "";
+        document.getElementById('Filtracao').value = "";
         document.getElementById('_501').value = "";
         document.getElementById('_503').value = "";
         document.getElementById('_511_Cerveja').value = "";
@@ -490,6 +491,7 @@
           //console.log(this.arrayProdutos)
           document.getElementById('lista_array').value = JSON.stringify(this.arrayProdutos);
           this.cancelar();
+          this.botaoFormDelete();
         }
       }
 
@@ -505,7 +507,7 @@
           document.getElementById('id').value = dados.id;
           document.getElementById('Brassagem').value = dados.Brassagem;
           document.getElementById('Centrifuga').value = dados.Centrifuga;
-          document.getElementById('Filtração').value = dados.Filtração;
+          document.getElementById('Filtracao').value = dados.Filtracao;
           document.getElementById('_501').value = dados._501;
           document.getElementById('_503').value = dados._503;
           document.getElementById('_511_Cerveja').value = dados._511_Cerveja;
@@ -530,7 +532,7 @@
             this.arrayProdutos[i].id = produto.id;
             this.arrayProdutos[i].Brassagem = produto.Brassagem;
             this.arrayProdutos[i].Centrifuga = produto.Centrifuga;
-            this.arrayProdutos[i].Filtração = produto.Filtração;
+            this.arrayProdutos[i].Filtracao = produto.Filtracao;
             this.arrayProdutos[i]._501 = produto._501;
             this.arrayProdutos[i]._503 = produto._503;
             this.arrayProdutos[i]._511_Cerveja = produto._511_Cerveja;
@@ -546,7 +548,9 @@
         /*document.getElementById('btn1').innerText = "Salvar";
         this.editId = null;*/
       }
-        
+      botaoFormDelete(){
+        document.getElementById('botaoDelete').click();
+      }
       }
       
 
